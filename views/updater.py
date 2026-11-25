@@ -171,6 +171,11 @@ class _CheckThread(QThread):
                 self.found.emit(release)
             else:
                 log.info("Обновлений нет (текущая версия %s)", version.VERSION)
+        except urllib.error.HTTPError as ex:
+            if ex.code == 404:  # в репозитории ещё нет опубликованных релизов (или неверный UPDATE_REPO)
+                log.info("В репозитории %s пока нет опубликованных релизов", self.repo)
+            else:
+                log.warning("Не удалось проверить обновления: %s", ex)
         except Exception as ex:  # нет интернета и т.п. — касса работает дальше
             log.warning("Не удалось проверить обновления: %s", ex)
 
