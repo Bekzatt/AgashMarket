@@ -1,0 +1,1 @@
+sqlcmd -S . -d master -i "C:\AgashGroup\backup\backup.sql" > "C:\AgashGroup\backup\backup_log.txt" 2>&1
